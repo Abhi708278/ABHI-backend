@@ -25,7 +25,11 @@ const addRetailers = (app,retailer)=>{
         
 
 
-    })
+    });
+
+
+
+    
 
 
 }
