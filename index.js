@@ -6,7 +6,7 @@ const twilio = require("twilio"); // for otp on mob.
 
 // Importing database models
 const otpStore = require("./models/otpStore");
-const user = require("./models/user");
+const user = require("./models/user"); 
 const retailer = require("./models/retailer");
 const passwordReset = require("./models/passwordReset");
 
@@ -22,7 +22,7 @@ const addRetailers = require("./AdminPanel/addRetailers");
 
 
 
-userAuth(app,twilio, otpStore, user,retailer,passwordReset,bcrypt);
+userAuth(app,twilio, otpStore, user,retailer,bcrypt);
 addRetailers(app,retailer);
 
 module.exports = app;
