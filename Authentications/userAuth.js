@@ -205,7 +205,7 @@ const authentication = (app, twilio, otpStore, user, retailer, bcrypt) => {
       const length = mobileNum.length;
 
       if (length >= 10 && length <= 13) {
-        const otp = generateOtp(4);
+        const otp = generateOtp(6);
         const newOtp = new otpStore({ mobileNum, otp });
         newOtp.save();
         
