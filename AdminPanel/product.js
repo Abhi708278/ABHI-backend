@@ -4,8 +4,6 @@ const Admin = require("../models/admin");
 // Create a new product
 exports.createProduct = async (req, res) => {
   try {
-
-
     const {
       name, description, price, discountPrice, stockQuantity,
       minimumQuantity, tags, images, videos, category, isFeatured
@@ -16,19 +14,9 @@ exports.createProduct = async (req, res) => {
       minimumQuantity, tags: tags ? tags.split(",") : [],
       images: images ? images.split(",") : [],
       videos: videos ? videos.split(",") : [],
-      category, isFeatured
-    });
-
+      category, isFeatured  });
     await product.save();
 
-
-
-
-
-
-    // const { name, description, price, image, category, isFeatured } = req.body;
-    // const product = new Product({ name, description, price, image, category,isFeatured });
-    // await product.save();
     res.status(201).json({ success: true, data: product });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server Error" });
@@ -116,11 +104,13 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
+//analysis of product....... 
 exports.anylisis = async (req, res) => {
   try {
     console.log("hit");
-    const anylisisId  = "67991e43dfb6162110ede065";
-    const anylisisData = await Admin.findById(anylisisId);
+    //const anylisisId  = "67991e43dfb6162110ede065";
+    // const anylisisData = await Admin.findById(anylisisId); 
+    const anylisisData = await Admin.find();
     
     if(!anylisisData){
       res.status(404).json({ success: false, message: "Not Found" });
