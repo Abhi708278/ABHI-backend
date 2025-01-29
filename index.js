@@ -6,7 +6,7 @@ const twilio = require("twilio"); // for otp on mob.
 
 // Importing database models
 const otpStore = require("./models/otpStore");
-const user = require("./models/user"); 
+const user = require("./models/user");
 const retailer = require("./models/retailer");
 const passwordReset = require("./models/passwordReset");
 
@@ -19,10 +19,16 @@ app.use(cors());
 // Apis Modules
 const userAuth = require("./Authentications/userAuth");
 const addRetailers = require("./AdminPanel/addRetailers");
+const productRoutes = require("./routes/products");
+const {anylisis} = require("./routes/anylisis");
 
 
+// Admin Routes
+app.use("/admin", productRoutes);
+// app.use("/anylisis", anylisis);
 
-userAuth(app,twilio, otpStore, user,retailer,bcrypt);
-addRetailers(app,retailer);
+
+userAuth(app, twilio, otpStore, user, retailer, bcrypt);
+addRetailers(app, retailer);
 
 module.exports = app;
