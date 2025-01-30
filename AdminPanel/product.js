@@ -17,7 +17,8 @@ exports.createProduct = async (req, res) => {
       category, isFeatured  });
     await product.save();
 
-    res.status(201).json({ success: true, data: product });
+    res.status(201).json({ success: true, message: "Create product successfully done" });
+    // res.status(201).json({ success: true, data: product });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server Error" });
   }
@@ -103,6 +104,15 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+
+
+
+
+
+
+
+
 
 //analysis of product....... 
 exports.anylisis = async (req, res) => {
