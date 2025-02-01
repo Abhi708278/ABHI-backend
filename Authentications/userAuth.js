@@ -236,84 +236,32 @@ const authentication = (app, twilio, otpStore, user, retailer, bcrypt) => {
     }
   });
 
-  // // Verify OTP and sign up or login the user
-  // app.post("/verify-otp/:mob", async (req, res) => {
-  //   try {
-  //     const mobileNum = req.params.mob;
-  //     const { otp } = req.body;
-  //     const storedOtp = await otpStore.findOne({ mobileNum, otp });
-
-  //     if (storedOtp) {
-  //       let existingUser = await user.findOne({ mobileNum });
-
-  //       if (!existingUser) {
-  //         // If user doesn't exist, create a new user with just mobile number
-  //         const newUser = new user({ mobileNum });
-  //         await newUser.save();
-  //       }
-
-  //       // Delete OTP after successful verification
-  //       await otpStore.deleteOne({ mobileNum, otp });
-  //       res.status(200).json({ success: true, data: "OTP verified, user signed in or signed up" });
-  //     } else {
-  //       res.status(400).json({ success: false, data: "Invalid OTP" });
-  //     }
-  //   } catch (error) {
-  //     console.log("error api",error);
-  //     // res.status(500).json({ success: false, data: "Server Error" });
-  //     res.status(500).json({ success: false, data: "Server Error", error: error.message });
-  //   }
-  // });
-
-
-
+  // Verify OTP and sign up or login the user
   app.post("/verify-otp/:mob", async (req, res) => {
     try {
       const mobileNum = req.params.mob;
       const { otp } = req.body;
-  
-      console.log("Received mobileNum:", mobileNum); // Debug: Check mobile number
-      console.log("Received OTP:", otp); // Debug: Check OTP received in body
-  
       const storedOtp = await otpStore.findOne({ mobileNum, otp });
-      console.log("Stored OTP record:", storedOtp); // Debug: Check stored OTP
-  
+
       if (storedOtp) {
         let existingUser = await user.findOne({ mobileNum });
-        console.log("Existing user record:", existingUser); // Debug: Check if user exists
-  
+
         if (!existingUser) {
-          // If user doesn't exist, create a new user with just mobile number
           const newUser = new user({ mobileNum });
           await newUser.save();
-          console.log("New user created:", newUser); // Debug: Log new user creation
         }
-  
+
         // Delete OTP after successful verification
         await otpStore.deleteOne({ mobileNum, otp });
-        console.log("OTP deleted successfully"); // Debug: Confirm OTP deletion
-  
-        res
-          .status(200)
-          .json({ success: true, data: "OTP verified, user signed in or signed up" });
+        res.status(200).json({ success: true, data: "OTP verified, user signed in or signed up" });
       } else {
-        console.log("Invalid OTP"); // Debug: Log invalid OTP case
         res.status(400).json({ success: false, data: "Invalid OTP" });
       }
     } catch (error) {
-      console.log("Error in verify-otp API:", error.stack); // Print full error stack trace
-      res.status(500).json({ success: false, data: "Server Error", error: error.message });
+      console.log(error);
+      res.status(500).json({ success: false, data: "Server Error" });
     }
   });
-  
-
-
-
-
-
-
-
-
 
   // Login (no password, just OTP verification)
   app.post("/login", async (req, res) => {
@@ -331,7 +279,7 @@ const authentication = (app, twilio, otpStore, user, retailer, bcrypt) => {
 
       res.status(200).json({ success: true, data: { message: "User logged in successfully", user: existingUser } });
     } catch (error) {
-      console.log(error); 
+      console.log(error);
       res.status(500).json({ success: false, data: "Server Error" });
     }
   });

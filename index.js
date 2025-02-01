@@ -15,15 +15,18 @@ app.use(express.json()); // This is necessary to parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 // Apis Modules
 const userAuth = require("./Authentications/userAuth");
 const addRetailers = require("./AdminPanel/addRetailers");
 const productRoutes = require("./routes/products");
 const {anylisis} = require("./routes/anylisis");
-
+const categoryRoutes = require("./routes/category");
 
 // Admin Routes
+app.use("/category", categoryRoutes);
+
 app.use("/admin", productRoutes);
 // app.use("/anylisis", anylisis);
 

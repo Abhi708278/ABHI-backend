@@ -1,29 +1,30 @@
 const express = require("express");
 const {
     createProduct,
-    deleteProduct,
     getAllProducts,
+    updateProduct,
     getFeaturedProducts,
     getProductsByCategory,
     getRecommendedProducts,
     toggleFeaturedProduct,
-    anylisis,
-    updateAnylisis
+    deleteProduct,
+    analysis,
+    updateAnalysis
 } = require("../AdminPanel/product.js"); 
 
 const { protectRoute, adminRoute } = require("../middleware/authmiddleware.js");
 const router = express.Router();
 
-// Routes
-router.get("/", protectRoute, adminRoute, getAllProducts);
+// Routes (ordered as per product.js)
+router.post("/", protectRoute, adminRoute, createProduct);
+router.get("/allproducts", protectRoute, adminRoute, getAllProducts);
+router.patch("/update/:productId", protectRoute, adminRoute, updateProduct);
 router.get("/featured", getFeaturedProducts);
 router.get("/category/:category", getProductsByCategory);
 router.get("/recommendations/:count", getRecommendedProducts);
-router.post("/", protectRoute, adminRoute, createProduct);
-router.patch("/:id", protectRoute, adminRoute, toggleFeaturedProduct);
-router.delete("/:id", protectRoute, adminRoute, deleteProduct);
-router.get("/anylisis", protectRoute, adminRoute, anylisis);
-router.post("/update", protectRoute, adminRoute, updateAnylisis);
+router.patch("/featured/:productId", protectRoute, adminRoute, toggleFeaturedProduct);
+router.delete("/:productId", protectRoute, adminRoute, deleteProduct);
+router.get("/analysis", protectRoute, adminRoute, analysis);
+router.post("/update-analysis", protectRoute, adminRoute, updateAnalysis);
 
 module.exports = router;
-
